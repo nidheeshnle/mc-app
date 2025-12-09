@@ -51,6 +51,8 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
 
       - name: Get GKE credentials
+        env:
+          USE_GKE_GCLOUD_AUTH_PLUGIN: "False"
         run: |
           gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_LOCATION
 
