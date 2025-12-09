@@ -37,26 +37,31 @@ jobs:
           tags: |
             ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
-      # ✅ NEW: authenticate to Google Cloud
+ # 1) Authenticate to Google Cloud using your service account JSON
       - id: auth
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      # ✅ NEW: install gcloud (no more service_account_key here)
+      # 2) Install gcloud SDK AND gke-gcloud-auth-plugin
       - name: Set up gcloud SDK
         uses: google-github-actions/setup-gcloud@v3
         with:
           project_id: ${{ env.PROJECT_ID }}
+          install_components: gke-gcloud-auth-plugin
 
+      # 3) Get GKE credentials (this will setup kubeconfig using the plugin)
       - name: Get GKE credentials
         env:
-          USE_GKE_GCLOUD_AUTH_PLUGIN: "False"
+          USE_GKE_GCLOUD_AUTH_PLUGIN: "True"
         run: |
           gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_LOCATION
 
+      # 4) Apply Kubernetes manifests using kubectl
       - name: Apply Kubernetes manifests
+        env:
+          USE_GKE_GCLOUD_AUTH_PLUGIN: "True"
         run: |
           kubectl apply -f k8s/namespace.yaml
           kubectl apply -f k8s/mongo.yaml
