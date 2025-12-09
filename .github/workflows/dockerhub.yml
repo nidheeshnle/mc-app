@@ -34,7 +34,6 @@ jobs:
         with:
           context: .
           push: true
-<<<<<<< HEAD
           tags: |
             ${{ env.DOCKERHUB_USERNAME }}/task-api:latest
 
