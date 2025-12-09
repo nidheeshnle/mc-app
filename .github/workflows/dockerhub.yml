@@ -34,6 +34,7 @@ jobs:
         with:
           context: .
           push: true
+<<<<<<< HEAD
           tags: |
             ${{ env.DOCKERHUB_USERNAME }}/task-api:latest
 
@@ -53,3 +54,6 @@ jobs:
           kubectl apply -f k8s/namespace.yaml
           kubectl apply -f k8s/mongo.yaml
           kubectl apply -f k8s/api.yaml
+=======
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/task-api:latest
+>>>>>>> 7645100deb07c34cc9ffbe5fc355285b01689a85

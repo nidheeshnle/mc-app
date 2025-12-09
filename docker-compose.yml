@@ -3,7 +3,7 @@ version: "3.9"
 services:
   api:
     build: .
-    container_name: task-api
+    container_name: task-api-container
     ports:
       - "3000:3000"
     environment:
