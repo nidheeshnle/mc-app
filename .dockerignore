@@ -1,0 +1,18 @@
+# Ignore Kubernetes manifests
+k8s/
+
+# Ignore Git info
+.git
+.gitignore
+
+# Node.js build artifacts
+node_modules
+npm-debug.log
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml
+
+# OS/editor junk
+.DS_Store
+*.swp
